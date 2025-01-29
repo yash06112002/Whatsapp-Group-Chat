@@ -29,11 +29,16 @@ function Chat() {
                 setMessages(snapshot.docs.map(doc => doc.data()))
             ))
         }
+        setSeed(Math.floor(Math.random() * 5000))
     }, [roomId])
 
     useEffect(() => {
-        setSeed(Math.floor(Math.random() * 5000))
-    }, [roomId])
+        document.querySelector('.sidebar').classList.add('inactive');
+
+        return () => {
+            document.querySelector('.sidebar').classList.remove('inactive');
+        }
+    }, [])
 
     const sendMessage = async (e) => {
         e.preventDefault();
@@ -50,12 +55,9 @@ function Chat() {
         <div className='chat'>
             <div className='chat_header'>
                 <Avatar src={`https://avatars.dicebear.com/api/male/${seed}.svg`} />
-                <div className='chat_headerInfo'>
-                    <h3>{roomName}</h3>
-                    <p>
-                        Last Seen {" "}{new Date(messages[messages.length - 1]?.timestamp?.toDate()).toUTCString()}
-                    </p>
-                </div>
+                <h3 className='chat_headerInfo'>
+                    {roomName}
+                </h3>
                 <div className='chat_headerRight'>
                     <IconButton>
                         <SearchOutlined />
