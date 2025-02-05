@@ -16,6 +16,15 @@ const firebaseApp = firebase.initializeApp(firebaseConfig);
 const db = firebaseApp.firestore();
 
 const auth = firebase.auth();
+
+auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+    .then(() => {        
+        console.log("Auth persistence set to LOCAL");
+    })
+    .catch((error) => {
+        console.error("Error setting auth persistence:", error);
+    });
+
 const provider = new firebase.auth.GoogleAuthProvider();
 
 export { auth, provider };

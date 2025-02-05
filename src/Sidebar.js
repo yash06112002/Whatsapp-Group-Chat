@@ -1,9 +1,9 @@
 import React from 'react';
 import './Sidebar.css';
-import DonutLargeIcon from '@mui/icons-material/DonutLarge';
-import ChatIcon from '@mui/icons-material/Chat';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { Avatar, IconButton } from '@mui/material';
+import { auth } from './firebase';
+import { actionTypes } from './reducer';
+import { Navigate } from 'react-router-dom';
+import { Avatar } from '@mui/material';
 import { SearchOutlined } from '@mui/icons-material';
 import SidebarChat from './SidebarChat';
 import { useState, useEffect } from 'react';
@@ -11,40 +11,36 @@ import { useStateValue } from './StateProvider';
 import db from './firebase';
 
 export default function Sidebar() {
-
     const [rooms, setRooms] = useState([]);
     const [{ user }, dispatch] = useStateValue();
 
     useEffect(() => {
         const unsubscribe = db.collection('rooms').onSnapshot(snapshot => (
             setRooms(snapshot.docs.map(doc =>
-            ({
-                id: doc.id,
-                data: doc.data(),
-            })
+            ({ id: doc.id, data: doc.data() })
             ))
         ))
+        return () => unsubscribe();
+    }, []);
 
-        return () => {
-            unsubscribe();
-        }
-    }, [])
+    const handleLogout = () => {
+        auth.signOut().then(() => {
+            Navigate('/login');
+            dispatch({
+                type: actionTypes.SET_USER,
+                user: null,
+            });
+        }).catch((error) => {
+            console.error("Error signing out:", error);
+        });
+    };
 
     return (
         <div className='sidebar'>
             <div className='sidebar_header'>
                 <Avatar src={user?.photoURL} />
                 <div className='sidebar_headerRight'>
-                    <IconButton>
-                        <DonutLargeIcon />
-                    </IconButton>
-                    <IconButton>
-                        <ChatIcon />
-                    </IconButton>
-                    <IconButton>
-                        <MoreVertIcon />
-                    </IconButton>
-
+                    <button className='logout_button' onClick={handleLogout}>Logout</button>
                 </div>
             </div>
             <div className='sidebar_search'>

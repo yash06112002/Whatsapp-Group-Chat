@@ -1,5 +1,5 @@
-import { AttachFile, InsertEmoticon, MoreVert, SearchOutlined, MicOutlined, KeyboardBackspace } from '@mui/icons-material';
-import { Avatar, IconButton } from '@mui/material';
+import { AttachFile, KeyboardBackspace } from '@mui/icons-material';
+import { IconButton } from '@mui/material';
 import React, { useState, useEffect, useRef } from 'react'
 import { useStateValue } from './StateProvider';
 import './Chat.css';
@@ -15,11 +15,11 @@ function Chat() {
     const latestMessageRef = useRef(null);
     const { roomId } = useParams();
     const [input, setInput] = useState("");
-    const [seed, setSeed] = useState("");
+    const [, setSeed] = useState("");
     const [roomName, setRoomName] = useState("")
     const [messages, setMessages] = useState([]);
     const [file, setFile] = useState(null);
-    const [{ user }, dispatch] = useStateValue();
+    const [{ user }] = useStateValue();
 
     useEffect(() => {
         if (roomId) {
@@ -37,7 +37,7 @@ function Chat() {
         document.querySelector('.sidebar').classList.add('inactive');
 
         return () => {
-            document.querySelector('.sidebar').classList.remove('inactive');
+            document.querySelector('.sidebar')?.classList.remove('inactive');
         }
     }, [])
 
