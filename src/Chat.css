@@ -95,3 +95,27 @@
   padding: 10px;
   color: gray;
 }
+
+.chat_content {
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+}
+
+.chat_image {
+    aspect-ratio: 1;
+    object-fit: cover;
+    max-width: 100%;
+    max-height: 300px;
+}
+
+.chat_text {
+    max-width: 100%;
+    word-wrap: break-word;
+    margin-top: 10px;
+}
+
+.chat_timestamp {
+  display: flex;
+  justify-content: flex-end;
+}
