@@ -57,7 +57,7 @@ function Chat() {
         };
 
         if (file) {
-            const result = await axios.post(process.env.REACT_APP_MEDIA_UPLOAD_URL, {
+            const result = await axios.post('/api/upload', {
                 file,
             }, {
                 headers: { 'Content-Type': 'multipart/form-data' },
