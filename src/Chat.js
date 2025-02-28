@@ -57,7 +57,7 @@ function Chat() {
         };
 
         if (file) {
-            const result = await axios.post('/api/upload', {
+            const result = await axios.post('/api/media/upload', {
                 file,
             }, {
                 headers: { 'Content-Type': 'multipart/form-data' },
