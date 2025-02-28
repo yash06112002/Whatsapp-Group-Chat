@@ -1,4 +1,4 @@
-import { AttachFile, KeyboardBackspace } from '@mui/icons-material';
+import { AttachFile, KeyboardBackspace, SmartToy } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
 import React, { useState, useEffect, useRef } from 'react'
 import { useStateValue } from './StateProvider';
@@ -75,6 +75,16 @@ function Chat() {
         }
     };
 
+    const simulateAIResponse = async () => {
+        try {
+            await axios.post('/api/auto-message/generate', {
+                roomId,
+            });
+        } catch (error) {
+            console.error('Error getting AI response:', error);
+        }
+    };
+
     return (
         <div className='chat'>
             <div className='chat_header'>
@@ -86,6 +96,11 @@ function Chat() {
                 <h3 className='chat_headerInfo'>
                     {roomName}
                 </h3>
+                <div className='chat_headerRight'>
+                    <IconButton onClick={simulateAIResponse}>
+                        <SmartToy />
+                    </IconButton>
+                </div>
             </div>
             <div className='chat_body'>
                 {messages.map((message, index) => (
