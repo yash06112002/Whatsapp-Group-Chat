@@ -86,61 +86,71 @@ function Chat() {
     };
 
     return (
-        <div className='chat'>
-            <div className='chat_header'>
-                <div className='chat_headerBack'>
-                    <IconButton>
-                        <KeyboardBackspace onClick={() => navigate('/')} />
-                    </IconButton>
-                </div>
-                <h3 className='chat_headerInfo'>
-                    {roomName}
-                </h3>
-                <div className='chat_headerRight'>
-                    <IconButton onClick={simulateAIResponse}>
-                        <SmartToy />
-                    </IconButton>
-                </div>
-            </div>
-            <div className='chat_body'>
-                {messages.map((message, index) => (
-                    <div
-                        className={`chat_message ${message.name === user.displayName && 'chat_reciever'}`}
-                        ref={index === messages.length - 1 ? latestMessageRef : null}
-                    >
-                        <span className='chat_name'>{message.name}</span>
-                        <div className='chat_content'>
-                            {message.file && <img className='chat_image' src={message.file} alt='file' />}
-                            <span className='chat_text'>{message.message}</span>
-                        </div>
-                        <div className='chat_time'>
-                            <span className='chat_timestamp'>
-                                {new Date(message.timestamp?.toDate()).toUTCString()}
-                            </span>
-                        </div>
-                    </div>
-                ))}
-            </div>
-            <div className='chat_footer'>
-                <label htmlFor="file-input" style={{ cursor: "pointer" }}>
-                    <IconButton component="span">
-                        <AttachFile />
-                    </IconButton>
-                </label>
-                <form >
-                    <input
-                        id="file-input"
-                        type="file"
-                        accept='image/*'
-                        style={{ display: "none" }}
-                        onChange={handleFileChange}
-                    />
-                    <input value={input} onChange={e => setInput(e.target.value)} type='text' placeholder='Type A Message' />
-                    <button onClick={sendMessage} type='submit'>Send</button>
-                </form>
-            </div>
+      <div className="chat">
+        <div className="chat_header">
+          <div className="chat_headerBack">
+            <IconButton onClick={() => navigate("/")}>
+              <KeyboardBackspace />
+            </IconButton>
+          </div>
+          <h3 className="chat_headerInfo">{roomName}</h3>
+          <div className="chat_headerRight">
+            <IconButton onClick={simulateAIResponse}>
+              <SmartToy />
+            </IconButton>
+          </div>
         </div>
-    )
+        <div className="chat_body">
+          {messages.map((message, index) => (
+            <div
+              className={`chat_message ${
+                message.name === user.displayName && "chat_reciever"
+              }`}
+              ref={index === messages.length - 1 ? latestMessageRef : null}
+              key={index}
+            >
+              <span className="chat_name">{message.name}</span>
+              <div className="chat_content">
+                {message.file && (
+                  <img className="chat_image" src={message.file} alt="file" />
+                )}
+                <span className="chat_text">{message.message}</span>
+              </div>
+              <div className="chat_time">
+                <span className="chat_timestamp">
+                  {new Date(message.timestamp?.toDate()).toUTCString()}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="chat_footer">
+          <label htmlFor="file-input" style={{ cursor: "pointer" }}>
+            <IconButton component="span">
+              <AttachFile />
+            </IconButton>
+          </label>
+          <form>
+            <input
+              id="file-input"
+              type="file"
+              accept="image/*"
+              style={{ display: "none" }}
+              onChange={handleFileChange}
+            />
+            <input
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              type="text"
+              placeholder="Type A Message"
+            />
+            <button onClick={sendMessage} type="submit">
+              Send
+            </button>
+          </form>
+        </div>
+      </div>
+    );
 }
 
 export default Chat;

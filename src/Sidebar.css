@@ -57,6 +57,7 @@
   flex: 1;
   background-color: white;
   overflow: scroll;
+  max-width: 400px;
 }
 
 .logout_button {
