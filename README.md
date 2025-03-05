@@ -1,71 +1,100 @@
-#![wp_ss](https://user-images.githubusercontent.com/82724814/186812418-dedf5930-84d7-41dc-9848-96beb2ebcc46.jpg)
- Getting Started with Create React App
+![wp_ss](https://user-images.githubusercontent.com/82724814/186812418-dedf5930-84d7-41dc-9848-96beb2ebcc46.jpg)
+ # WhatsApp Web Clone
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A real-time chat application built with React and Firebase, featuring AI-powered chat agents. This project replicates core WhatsApp Web functionalities with modern web technologies.
 
-## Available Scripts
+![WhatsApp Clone Demo](demo.gif)
 
-In the project directory, you can run:
+## 🚀 Features
 
-### `npm start`
+- **Real-time Messaging**: Instant message delivery using Firebase Realtime Database
+- **Google Authentication**: Secure user authentication with Firebase Auth
+- **Create Chat Rooms**: Dynamic chat room creation
+- **Image Sharing**: Support for image uploads in conversations
+- **AI Chat Agents**: Integration with Gemini for intelligent chat interactions
+- **Responsive Design**: Mobile-friendly interface using Material-UI
+- **Message History**: Persistent chat history with Firestore
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 🛠️ Technologies Used
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- React.js
+- Firebase (Authentication, Firestore)
+- Material-UI
+- React Router
+- Gemini API
+- Express.js (Media, AI Agent Server)
+- Github Actions
+- Docker
+- Google Cloud(Compute, Object Storage Service)
 
-### `npm test`
+## 📦 Installation
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/whatsapp-clone.git
+cd whatsapp-clone
+```
 
-### `npm run build`
+2. Install dependencies:
+```bash
+npm install
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+3. Create a relevant `.env` file in the root directory
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+4. Start the development server:
+```bash
+npm start
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Backend Server Setup
 
-### `npm run eject`
+1. Navigate to the backend server directory:
+```bash
+cd whatsapp-media
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+2. Install server dependencies:
+```bash
+npm install
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3. Create a relevant `.env` file for the server:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+4. Start the backend server:
+```bash
+npm start
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 💡 Usage
 
-## Learn More
+1. Sign in with your Google account
+2. Create a new chat room or join existing ones
+3. Start sending messages and sharing images
+4. Use the AI chat bot button to interact with AI agents
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 📱 Screenshots
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+![Login Screen](screenshots/login.png)
+![Chat Interface](screenshots/chat.png)
+![AI Integration](screenshots/ai-chat.png)
 
-### Code Splitting
+## 🚧 Future Improvements
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- [ ] Message reactions
+- [ ] Dark mode support
 
-### Analyzing the Bundle Size
+## 🤝 Contributing
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-### Making a Progressive Web App
+## 👏 Acknowledgments
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- WhatsApp Web for inspiration
+- Firebase team for the amazing BaaS
+- Gemini for their powerful API
+- Material-UI team for the components
