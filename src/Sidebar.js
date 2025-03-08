@@ -9,6 +9,7 @@ import SidebarChat from './SidebarChat';
 import { useState, useEffect } from 'react';
 import { useStateValue } from './StateProvider';
 import db from './firebase';
+import MessageCounter from './MessageCounter';
 
 export default function Sidebar() {
     const [rooms, setRooms] = useState([]);
@@ -24,7 +25,15 @@ export default function Sidebar() {
     }, []);
 
     const handleLogout = () => {
-        auth.signOut().then(() => {
+        if(user.isGuest) {
+        dispatch({
+            type: actionTypes.SET_GUEST_USER,
+            user: null,
+        });
+        return;
+    }
+        auth.signOut()
+        .then(() => {
             Navigate('/login');
             dispatch({
                 type: actionTypes.SET_USER,
@@ -36,26 +45,35 @@ export default function Sidebar() {
     };
 
     return (
-        <div className='sidebar'>
-            <div className='sidebar_header'>
-                <Avatar src={user?.photoURL} />
-                <div className='sidebar_headerRight'>
-                    <button className='logout_button' onClick={handleLogout}>Logout</button>
-                </div>
-            </div>
-            <div className='sidebar_search'>
-                <div className='sidebar_searchContainer'>
-                    <SearchOutlined />
-                    <input placeholder='Search a Chat' type='text' />
-                </div>
-            </div>
-            <div className='sidebar_chats'>
-                <SidebarChat addNewChat />
-                {rooms.map(room => (
-                    <SidebarChat key={room.id} id={room.id} name={room.data.name} />
-                ))}
-            </div>
+      <div className="sidebar">
+        <div className="sidebar_header">
+          <Avatar src={user?.photoURL} />
+          <div className="sidebar_headerRight">
+            <button className="logout_button" onClick={handleLogout}>
+              Logout
+            </button>
+          </div>
         </div>
+
+        {user?.isGuest && (
+          <MessageCounter
+            manualCount={user.manualMessagesLeft || 0}
+            botCount={user.autoMessagesLeft || 0}
+          />
+        )}
+        <div className="sidebar_search">
+          <div className="sidebar_searchContainer">
+            <SearchOutlined />
+            <input placeholder="Search a Chat" type="text" />
+          </div>
+        </div>
+        <div className="sidebar_chats">
+          <SidebarChat addNewChat />
+          {rooms.map((room) => (
+            <SidebarChat key={room.id} id={room.id} name={room.data.name} />
+          ))}
+        </div>
+      </div>
     );
 
 }

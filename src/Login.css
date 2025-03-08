@@ -23,3 +23,11 @@
     background-color: #0a8d48 !important;
     color: white; 
 }
+
+.login_container .MuiButton-root {
+    margin: 10px 0;
+}
+
+.login_container .MuiDivider-root {
+    color: #666;
+}
