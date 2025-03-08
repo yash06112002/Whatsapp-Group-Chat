@@ -46,7 +46,7 @@ function Login() {
       const guestUser = createGuestUser();
       
       const response = await fetch(
-        `/api/guest-user/${guestUser.uid}`,
+        `http://localhost:3000/guest-user/${guestUser.uid}`,
         {
           method: "POST",
           headers: {

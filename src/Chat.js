@@ -1,4 +1,4 @@
-import { AttachFile, KeyboardBackspace, SmartToy } from "@mui/icons-material";
+import { KeyboardBackspace, SmartToy } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 import React, { useState, useEffect, useRef } from "react";
 import { useStateValue } from "./StateProvider";
@@ -10,6 +10,8 @@ import "firebase/compat/auth";
 import "firebase/compat/firestore";
 import axios from "axios";
 import { actionTypes } from "./reducer";
+import ImageInput from './components/ImageInput';
+import ImagePreviewModal from './components/ImagePreviewModal';
 
 function Chat() {
   const navigate = useNavigate();
@@ -21,6 +23,7 @@ function Chat() {
   const [messages, setMessages] = useState([]);
   const [file, setFile] = useState(null);
   const [{ user }, dispatch] = useStateValue();
+  const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
     if (roomId) {
@@ -62,11 +65,12 @@ function Chat() {
 
     if (file) {
       const result = await axios.post(
-        "/api/media/upload",
+        "http://localhost:3000/media/upload",
         { file },
         { headers: { "Content-Type": "multipart/form-data" } }
       );
       body.file = result.data.filePath;
+      clearSelectedFile();
     }
 
     if (user.isGuest) {
@@ -75,7 +79,7 @@ function Chat() {
         return;
       }
       const response = await fetch(
-        `/api/guest-user/${user.uid}/manual-message`,
+        `http://localhost:3000/guest-user/${user.uid}/manual-message`,
         {
           method: "POST",
           headers: {
@@ -101,10 +105,14 @@ function Chat() {
   };
 
   const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setFile(file);
+    const selectedFile = event.target.files[0];
+    if (selectedFile) {
+      setFile(selectedFile);
     }
+  };
+
+  const clearSelectedFile = () => {
+    setFile(null);
   };
 
   const simulateAIResponse = async () => {
@@ -114,7 +122,7 @@ function Chat() {
         return;
       }
       const response = await fetch(
-        `/api/guest-user/${user.uid}/auto-message`,
+        `http://localhost:3000/guest-user/${user.uid}/auto-message`,
         {
           method: "POST",
           headers: {
@@ -134,12 +142,16 @@ function Chat() {
       });
     }
     try {
-      await axios.post("/api/auto-message/generate", {
-          roomId,
-        });
+      await axios.post("http://localhost:3000/auto-message/generate", {
+        roomId,
+      });
     } catch (error) {
       console.error("Error getting AI response:", error);
     }
+  };
+
+  const handleImageClick = (imageUrl) => {
+    setSelectedImage(imageUrl);
   };
 
   return (
@@ -169,7 +181,13 @@ function Chat() {
             <span className="chat_name">{message.name}</span>
             <div className="chat_content">
               {message.file && (
-                <img className="chat_image" src={message.file} alt="file" />
+                <img 
+                  className="chat_image" 
+                  src={message.file} 
+                  alt="file"
+                  onClick={() => handleImageClick(message.file)}
+                  style={{ cursor: 'pointer' }}
+                />
               )}
               <span className="chat_text">{message.message}</span>
             </div>
@@ -182,19 +200,12 @@ function Chat() {
         ))}
       </div>
       <div className="chat_footer">
-        <label htmlFor="file-input" style={{ cursor: "pointer" }}>
-          <IconButton component="span">
-            <AttachFile />
-          </IconButton>
-        </label>
+        <ImageInput 
+          onFileChange={handleFileChange}
+          selectedFile={file}
+          onClear={clearSelectedFile}
+        />
         <form>
-          <input
-            id="file-input"
-            type="file"
-            accept="image/*"
-            style={{ display: "none" }}
-            onChange={handleFileChange}
-          />
           <input
             value={input}
             onChange={(e) => setInput(e.target.value)}
@@ -206,6 +217,12 @@ function Chat() {
           </button>
         </form>
       </div>
+      
+      <ImagePreviewModal
+        open={!!selectedImage}
+        onClose={() => setSelectedImage(null)}
+        imageUrl={selectedImage}
+      />
     </div>
   );
 }

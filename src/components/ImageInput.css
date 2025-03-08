@@ -1,0 +1,31 @@
+.image-input {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.selected-file {
+  position: relative;
+  margin: 0 8px;
+}
+
+.image-preview {
+  height: 40px;
+  width: 40px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
+}
+
+.clear-image {
+  position: absolute !important;
+  top: -8px;
+  right: -8px;
+  background-color: #fff !important;
+  padding: 2px !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.clear-image:hover {
+  background-color: #f5f5f5 !important;
+}

@@ -76,10 +76,12 @@
   align-items: center;
   height: 62px;
   border-top: 1px solid lightgray;
+  padding: 0 10px;
 }
 .chat_footer > form {
   flex: 1;
   display: flex;
+  margin: 0 10px;
 }
 .chat_footer > form > input {
   flex: 1;
@@ -96,6 +98,15 @@
   color: gray;
 }
 
+.chat_footer .MuiIconButton-root {
+  color: #919191;
+  transition: color 0.2s ease;
+}
+
+.chat_footer .MuiIconButton-root:hover {
+  color: #128C7E;
+}
+
 .chat_content {
     display: flex;
     flex-direction: column;
@@ -107,6 +118,12 @@
     object-fit: cover;
     max-width: 100%;
     max-height: 300px;
+    border-radius: 5px;
+    transition: transform 0.2s ease;
+}
+
+.chat_image:hover {
+    transform: scale(1.02);
 }
 
 .chat_text {
