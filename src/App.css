@@ -12,3 +12,22 @@
   width: 90vw;
   box-shadow: -1px 4px 20px -6px rgb(0, 0, 0, 0.75);
 }
+
+.info-button {
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.info-button:hover {
+    animation: none;
+}
