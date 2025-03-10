@@ -29,7 +29,7 @@ function Login() {
     } else {
       guestId = uuidv4();
     }
-    
+
     const guestUser = {
       uid: guestId,
       displayName: `Guest_${guestId.slice(0, 6)}`,
@@ -44,21 +44,19 @@ function Login() {
   const continueAsGuest = async () => {
     try {
       const guestUser = createGuestUser();
-      
-      const response = await fetch(
-        `http://localhost:3000/guest-user/${guestUser.uid}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ guestId: guestUser.uid }),
-        }
-      ).then((res) => res.json());
+
+      const response = await fetch(`/api/guest-user/${guestUser.uid}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ guestId: guestUser.uid }),
+      }).then((res) => res.json());
 
       dispatch({
         type: actionTypes.SET_GUEST_USER,
-        user: { ...response,
+        user: {
+          ...response,
           uid: guestUser.uid,
           displayName: `Guest_${guestUser.uid.slice(0, 6)}`,
           isGuest: true,

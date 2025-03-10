@@ -10,8 +10,8 @@ import "firebase/compat/auth";
 import "firebase/compat/firestore";
 import axios from "axios";
 import { actionTypes } from "./reducer";
-import ImageInput from './components/ImageInput';
-import ImagePreviewModal from './components/ImagePreviewModal';
+import ImageInput from "./components/ImageInput";
+import ImagePreviewModal from "./components/ImagePreviewModal";
 
 function Chat() {
   const navigate = useNavigate();
@@ -65,7 +65,7 @@ function Chat() {
 
     if (file) {
       const result = await axios.post(
-        "http://localhost:3000/media/upload",
+        "/api/media/upload",
         { file },
         { headers: { "Content-Type": "multipart/form-data" } }
       );
@@ -79,7 +79,7 @@ function Chat() {
         return;
       }
       const response = await fetch(
-        `http://localhost:3000/guest-user/${user.uid}/manual-message`,
+        `/api/guest-user/${user.uid}/manual-message`,
         {
           method: "POST",
           headers: {
@@ -121,16 +121,13 @@ function Chat() {
         alert("You have no auto messages left");
         return;
       }
-      const response = await fetch(
-        `http://localhost:3000/guest-user/${user.uid}/auto-message`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ guestId: user.uid }),
-        }
-      ).then((res) => res.json());
+      const response = await fetch(`/api/guest-user/${user.uid}/auto-message`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ guestId: user.uid }),
+      }).then((res) => res.json());
       dispatch({
         type: actionTypes.SET_GUEST_USER,
         user: {
@@ -142,7 +139,7 @@ function Chat() {
       });
     }
     try {
-      await axios.post("http://localhost:3000/auto-message/generate", {
+      await axios.post("/api/auto-message/generate", {
         roomId,
       });
     } catch (error) {
@@ -181,12 +178,12 @@ function Chat() {
             <span className="chat_name">{message.name}</span>
             <div className="chat_content">
               {message.file && (
-                <img 
-                  className="chat_image" 
-                  src={message.file} 
+                <img
+                  className="chat_image"
+                  src={message.file}
                   alt="file"
                   onClick={() => handleImageClick(message.file)}
-                  style={{ cursor: 'pointer' }}
+                  style={{ cursor: "pointer" }}
                 />
               )}
               <span className="chat_text">{message.message}</span>
@@ -200,7 +197,7 @@ function Chat() {
         ))}
       </div>
       <div className="chat_footer">
-        <ImageInput 
+        <ImageInput
           onFileChange={handleFileChange}
           selectedFile={file}
           onClear={clearSelectedFile}
@@ -217,7 +214,7 @@ function Chat() {
           </button>
         </form>
       </div>
-      
+
       <ImagePreviewModal
         open={!!selectedImage}
         onClose={() => setSelectedImage(null)}
